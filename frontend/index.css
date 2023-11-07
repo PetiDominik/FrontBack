@@ -1,0 +1,108 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+}
+
+/* input {
+    padding: 2px;
+    margin: 4px;
+    transition: 0.2s all;
+    border-radius: 5px;
+}
+
+input:hover {
+    padding: 4px;
+    margin: 2px;
+} */
+
+form > div {
+    margin: 5px;
+}
+
+form > div label {
+    font-weight: bold;
+}
+
+.valid {
+    color: green;
+}
+
+.invalid {
+    color: red;
+}
+
+.elrejt {
+    display: none;
+}
+
+/*---------------------*/
+table th::first-letter {
+    text-transform:capitalize;
+}
+
+.kesz td {
+    background: #0d0;
+}
+
+.fa {
+    margin: auto 5px;
+}
+
+.fa-remove, .fa-check, .fa-trash, .fa-plus {
+    transition: 0.2s color;
+    cursor: pointer;
+}
+
+.fa-remove:hover {
+    color: #e00;
+}
+
+.fa-check:hover, .fa-plus:hover {
+    color: #0d0;
+}
+
+.fa-trash:hover {
+    color: #f00;
+}
+
+
+.valid {
+    color: #0d0;
+}
+
+.invalid {
+    color: #e00;
+}
+
+#listLoader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.loader {
+    border: 16px solid #ccc;
+    border-radius: 50%;
+    border-top: 16px solid #086320;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
