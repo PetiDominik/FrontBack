@@ -49,26 +49,24 @@ table th::first-letter {
 }
 
 .fa {
-    margin: auto 5px;
-}
-
-.fa-remove, .fa-check, .fa-trash, .fa-plus {
-    transition: 0.2s color;
+    margin: 5px;
     cursor: pointer;
 }
-
-.fa-remove:hover {
-    color: #e00;
+.fa-trash {
+    color: #fe0101;
+    transition: 0.5s all;
 }
-
-.fa-check:hover, .fa-plus:hover {
-    color: #0d0;
-}
-
 .fa-trash:hover {
-    color: #f00;
+    color: #b10000;
 }
 
+.fa-pencil {
+    color: #098b2a;
+    transition: 0.5s all;
+}
+.fa-pencil:hover {
+    color: #06611d;
+}
 
 .valid {
     color: #0d0;
@@ -77,6 +75,19 @@ table th::first-letter {
 .invalid {
     color: #e00;
 }
+
+#editDataDiv {
+    z-index: 10000;
+    position: absolute;
+    width: 50%;
+    background: linear-gradient(45deg, #fff, #aaa);
+    border: 2px solid #aaa;
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+}
+/* ------------------------------- */
 
 #listLoader {
     width: 100%;

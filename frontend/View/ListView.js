@@ -8,7 +8,7 @@ class ListView {
 
     constructor(parentElement, datas, tableId) {
         this.#tableId = tableId;
-        this.#keys = Object.keys(datas[0] || []).filter(key => key != "kesz" && key != "torolve");
+        this.#keys = Object.keys(datas[0] || {});
         this.#parentElement = parentElement;
         this.#tableInsert();
         this.#element = $(`#${this.#tableId} tbody`);

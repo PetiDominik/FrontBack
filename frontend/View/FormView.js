@@ -3,19 +3,20 @@ import InputView from "./InputView.js";
 class FormView {
     #parentElement;
     #inputFields;
-    formElement;
+    #formElement;
     #inputs = [];
     #formData = {};
 
-    constructor(parentElement, inputFields) {
+    constructor(parentElement, inputFields, submitEvent) {
         this.#inputFields = inputFields;
         this.#parentElement = parentElement;
         this.#parentElement.append("<form>");
-        this.formElement = this.#parentElement.children("form");
+        this.#formElement = this.#parentElement.children("form");
 
         this.#urlapOsszerak();
-
-        $("#submit").on("click", (event) => {
+        console.log(this.#formElement.children(".submit"));
+        this.#formElement.children(".submit").on("click", (event) => {
+            console.log("a");
             event.preventDefault();
             
             let index = 0;
@@ -32,7 +33,7 @@ class FormView {
                     this.#formData[element.getKey()] = element.getValue();
                 });
                 
-                window.dispatchEvent(new CustomEvent("newData", {detail : this.#formData}));
+                window.dispatchEvent(new CustomEvent(submitEvent, {detail : this.#formData}));
             }
 
         });
@@ -43,10 +44,10 @@ class FormView {
 
         for (const key in this.#inputFields) {
             if (Object.hasOwnProperty.call(this.#inputFields, key)) {
-                this.#inputs.push(new InputView(this.formElement, this.#inputFields[key], key));
+                this.#inputs.push(new InputView(this.#formElement, this.#inputFields[key], key));
             }
         }
-        this.formElement.append(`<div><input type="submit" id="submit" value="Ok" /></div>`);
+        this.#formElement.append(`<div><input type="submit" class="submit" value="Ok" /></div>`);
     }
 }
 export default FormView;

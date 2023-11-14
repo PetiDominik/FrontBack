@@ -12,7 +12,7 @@ class MainController {
     #isLoading;
 
     constructor() {
-        this.#endPoint = "http://localhost:8000"
+        this.#endPoint = "http://localhost:8000/api";
         this.#dataService = new DataService();
         this.#tableDiv = $("#listField");
         this.#listElement = null;
@@ -23,7 +23,7 @@ class MainController {
         this.#dataService.getData(`${this.#endPoint}/writers`, this.newData);
         //this.#dataService.addData(`${this.#endPoint}/writers`, {nev : "Géza", szul : "20230101"}, this.showDatas);
 
-        new FormView($("#formField"), INPUT_FIELDS);
+        new FormView($("#formField"), INPUT_FIELDS, "newData");
 
         
     }
@@ -39,12 +39,29 @@ class MainController {
             this.showDatas(event.detail);
         });
 
-        $(window).on("startGettingDatasFromDB", (event) => {
+        $(window).on("startDBUsage", (event) => {
             this.#loading(true);
         });
 
-        $(window).on("successfulInsertDataToDB", (event) => {
+        $(window).on("endDBUsage", (event) => {
             this.#dataService.getData(`${this.#endPoint}/writers`, this.newData);
+        });
+
+        $(window).on("editButtonClick", (event) => {
+            const datas = event.detail;
+            console.log(datas);
+            this.#tableDiv.parent().append(`<div id="editDataDiv"></div>`);
+            new FormView($("#editDataDiv"), INPUT_FIELDS, "dataEdit");
+        });
+
+        $(window).on("dataEdit", (event) => {
+            const datas = event.detail;
+            this.#dataService.editData(`${this.#endPoint}/writers/${datas.writer_id}`, datas);
+        });
+        
+        $(window).on("deleteButtonClick", (event) => {
+            const ID = event.detail;
+            this.#dataService.removeData(`${this.#endPoint}/writers/${ID}`);
         });
     }
 
