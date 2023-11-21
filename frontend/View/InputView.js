@@ -7,25 +7,32 @@ class InputView {
     #validElement;
     #invalidElement;
     #isValid;
+    #id;
 
-    constructor(formElem, adatok, key) {
+    constructor(formElem, adatok, key, defaultData = null) {
         this.#isValid = false;
         this.#formElement = formElem;
         this.#datas = adatok;
         this.#key = key;
+        this.#id = `in-${this.#formElement.attr("id")}-${this.#key}`;
         this.#elem();
 
-        this.#InputElement = $(`#in-${key}`);
+        this.#InputElement = $(`#${this.#id}`);
         this.#validElement = this.#formElement.children("div:last-child").children(`#valid-${key}`);
         this.#invalidElement = this.#formElement.children("div:last-child").children(`#invalid-${key}`);
+        if (defaultData !== null) {
+            this.#InputElement.val(defaultData);
+            this.#validation();
+        }
 
         this.#InputElement.on("input", () => {
             this.#validation();
         });
+        
     }
 
     #elem() {
-        let txt = `<div class="mb-3 mt-3"><label for="${this.#key}" class="form-label">${this.#datas.extra.label}</label><input id="in-${this.#key}" `
+        let txt = `<div class="mb-3 mt-3"><label for="${this.#key}" class="form-label">${this.#datas.extra.label}</label><input id="${this.#id}" `
             + (this.#datas.type != "checkbox" ? `class="form-control"` : "");
 
         for (const key in this.#datas) {

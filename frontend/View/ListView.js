@@ -13,9 +13,13 @@ class ListView {
         this.#tableInsert();
         this.#element = $(`#${this.#tableId} tbody`);
 
-        datas.forEach((item) => {
-            new RowView(this.#element, item);
-        });
+        if (datas) {
+            datas.forEach((item) => {
+                new RowView(this.#element, item);
+            });
+        } else {
+            this.#element.html("<h2>Nincs adat</h2>")
+        }
         
     }
 

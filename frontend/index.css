@@ -7,6 +7,15 @@ body {
     height: 100vh;
 }
 
+main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: auto;
+}
 /* input {
     padding: 2px;
     margin: 4px;
@@ -89,7 +98,7 @@ table th::first-letter {
 }
 /* ------------------------------- */
 
-#listLoader {
+.loaderContainer {
     width: 100%;
     display: flex;
     align-items: center;
@@ -116,4 +125,33 @@ table th::first-letter {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+
+/* -------------------------------------------- */
+#mainNav {
+    display: block;
+}
+.menuItem {
+    display: inline-block;
+    cursor: pointer;
+    background-color: darkgrey;
+    margin: 5px 0px 5px 0px;
+    padding: 5px;
+    transition: 0.3s all ease-in-out;
+    border-radius: 5px;
+}
+
+.menuItem:hover {
+    background-color: rgb(34, 34, 34);
+    color: white;
+}
+
+.menuItem.active {
+    background-color: #098b2a;
+    color: white;
+}
+
+.menuItem.active:hover {
+    background-color: #06611d;
 }

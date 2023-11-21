@@ -3,16 +3,14 @@
 class DataService {
 
     constructor() {
-
+        axios.defaults.baseURL = "http://localhost:8000/api";
     }
 
-    getData(endPoint, okFnc) {
-        window.dispatchEvent(new CustomEvent("startDBUsage"));
+    getData(endPoint, eventDispatchHeader) {
+        window.dispatchEvent(new CustomEvent(`${eventDispatchHeader}#startDataGet`));
         axios.get(endPoint)
             .then(response => {
-                if (okFnc != null) {
-                    okFnc(response);
-                }
+                window.dispatchEvent(new CustomEvent(`${eventDispatchHeader}#endDataGet`, {detail: response.data}));
             })
             .catch(error => {
                 console.log(error);
@@ -49,7 +47,7 @@ class DataService {
 
     editData(endPoint, datas, okFnc = null) {
         window.dispatchEvent(new CustomEvent("startDBUsage"));
-        axios.patch(endPoint, datas)
+        axios.put(endPoint, datas)
             .then(response => {
                 window.dispatchEvent(new CustomEvent("endDBUsage"));
                 if (okFnc != null) {
