@@ -6,7 +6,7 @@ class ListView {
     #keys;
     #tableId;
 
-    constructor(parentElement, datas, tableId) {
+    constructor(parentElement, datas, tableId, eventDispatchHeader) {
         this.#tableId = tableId;
         this.#keys = Object.keys(datas[0] || {});
         this.#parentElement = parentElement;
@@ -15,16 +15,16 @@ class ListView {
 
         if (datas) {
             datas.forEach((item) => {
-                new RowView(this.#element, item);
+                new RowView(this.#element, item, eventDispatchHeader);
             });
         } else {
-            this.#element.html("<h2>Nincs adat</h2>")
+            this.#element.html("<h2>Nincs adat</h2>");
         }
         
     }
 
     #tableInsert() {
-        this.#parentElement.html();
+        this.#parentElement.html("");
 
         let txt = `<table class="table" id="${this.#tableId}"><thead><tr>`;
         this.#keys.forEach(key => {      

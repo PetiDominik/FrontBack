@@ -1,11 +1,10 @@
 import DataService from "../Model/DataService.js";
 
-import { INPUT_FIELDS } from "../Model/inputFields.js";
 import { PAGE_SHEME } from "../Model/PageSheme.js";
 
-import FormView from "../View/FormView.js";
 import AdminController from "./AdminController.js";
-
+import PublicController from "./PublicController.js";
+import SelectedController from "./SelectedController.js";
 
 class MainController {
     #dataService;
@@ -20,14 +19,6 @@ class MainController {
         }
         this.#initMenus();
         this.#reloadContent();
-
-        this.#handleEvents();
-
-        /* this.#loading(true); */
-        //this.#dataService.addData(`${this.#endPoint}/writers`, {nev : "Géza", szul : "20230101"}, this.showDatas);
-
-        //new FormView($("#formField"), "mainForm", INPUT_FIELDS, "newData");
-
         
     }
 
@@ -64,6 +55,8 @@ class MainController {
     }
 
     #reloadContent(datas = null) {
+        $(window).off();
+        
         const CONTENT_CONTAINER = $("article");
         const ACTIVE_MENU = this.#getActiveMenu();
         let content = PAGE_SHEME[ACTIVE_MENU] ? PAGE_SHEME[ACTIVE_MENU].content ? PAGE_SHEME[ACTIVE_MENU].content : "<h2> Nincs tartalom<h2>" : "<h2>404</h2>";
@@ -72,87 +65,18 @@ class MainController {
 
         switch (this.#getActiveMenu()) {
             case "public":
-                this.#activeController = null;
+                this.#activeController = new PublicController();
                 break;
             case "admin":
                 this.#activeController = new AdminController();
                 break;
             case "selected":
-                this.#activeController = null;
+                this.#activeController = new SelectedController();
                 break;
             default:
                 this.#activeController = null;
                 break;
         }
-    }
-
-    #handlePageRefresh() {
-
-    }
-
-    #handleEvents() {
-
-        $(window).on("newData", (event) => {
-            const DATAS = event.detail;
-            this.#dataService.addData(`/writers`, DATAS, this.dataInserted);
-        });
-
-        $(window).on("gettedDatasFromDB", (event) => {
-            this.showDatas(event.detail);
-        });
-
-        $(window).on("startDBUsage", (event) => {
-            this.#loading(true);
-        });
-
-        $(window).on("endDBUsage", (event) => {
-            this.#dataService.getData(`/writers`, this.newData);
-        });
-
-        $(window).on("editButtonClick", (event) => {
-            const datas = event.detail;
-            $("#listField").parent().append(`<div id="editDataDiv"></div>`);
-            new FormView($("#editDataDiv"), "editForm", INPUT_FIELDS, "dataEdit", datas, true);
-        });
-
-        $(window).on("dataEdit", (event) => {
-            const datas = event.detail;
-            
-            this.#dataService.editData(`/writers/${datas.writer_id}`, datas);
-        });
-        
-        $(window).on("deleteButtonClick", (event) => {
-            const ID = event.detail;
-            this.#dataService.removeData(`/writers/${ID}`);
-        });
-    }
-
-    newData(response) {
-        let data = response.data;
-        window.dispatchEvent(new CustomEvent("gettedDatasFromDB", {detail : data}));
-    }
-
-    showDatas(datas) {
-        this.#loading(false);
-        this.#reloadContent(datas);
-        console.log("a");
-        //new ListView(this.#tableDiv, datas, "datas-table");
-    }
-
-    #loading(starLoading) {
-        if (this.#isLoading && starLoading) {return;}
-        //-this.#tableDiv.html("");
-
-        if (starLoading) {
-            let txt = `<div id="listLoader"><div class="loader"></div></div>`;
-
-            //-this.#tableDiv.append(txt);
-            this.#isLoading = true;
-        } else {
-            $("listLoader").remove();
-            this.#isLoading = false;
-        }
-        
     }
 
     #getActiveMenu() {

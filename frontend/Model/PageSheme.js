@@ -2,6 +2,9 @@
 export const PAGE_SHEME = {
     "public" : {
         title : "Publikus",
+        content : `
+                    <div id="listField"></div>
+                    `
     },
     "admin" : {
         title : "Admin",
@@ -12,6 +15,6 @@ export const PAGE_SHEME = {
     },
     "selected" : {
         title : "Kiválasztott",
-        content : `<h2>Kiválasztott</h2>`
+        content : `<div id="listField"></div>`
     }
 }

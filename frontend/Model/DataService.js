@@ -1,41 +1,44 @@
 
 
 class DataService {
+    #eventDispatchHeader;
 
-    constructor() {
+    constructor(eventDispatchHeader) {
+        this.#eventDispatchHeader = eventDispatchHeader;
         axios.defaults.baseURL = "http://localhost:8000/api";
     }
 
-    getData(endPoint, eventDispatchHeader) {
-        window.dispatchEvent(new CustomEvent(`${eventDispatchHeader}#startDataGet`));
+    getData(endPoint) {
+        window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#startDataGet`));
+
         axios.get(endPoint)
             .then(response => {
-                window.dispatchEvent(new CustomEvent(`${eventDispatchHeader}#endDataGet`, {detail: response.data}));
+                window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#endDataGet`, {detail: response.data}));
             })
             .catch(error => {
-                console.log(error);
+                window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#error`, {detail: error}));
             });
     }
 
     addData(endPoint, datas, okFnc = null) {
-        window.dispatchEvent(new CustomEvent("startDBUsage"));
+        window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#startDBUsage`));
         axios.post(endPoint, datas)
             .then(response => {
-                window.dispatchEvent(new CustomEvent("endDBUsage"));
+                window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#endDBUsage`));
                 if (okFnc != null) {
                     okFnc(response);
                 }
             })
             .catch(error => {
-                console.log(error);
+                window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#error`, {detail: error}));
           });
     }
 
     removeData(endPoint, okFnc = null) {
-        window.dispatchEvent(new CustomEvent("startDBUsage"));
+        window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#startDBUsage`));
         axios.delete(endPoint)
             .then(response => {
-                window.dispatchEvent(new CustomEvent("endDBUsage"));
+                window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#endDBUsage`));
                 if (okFnc != null) {
                     okFnc(response);
                 }
@@ -46,16 +49,16 @@ class DataService {
     }
 
     editData(endPoint, datas, okFnc = null) {
-        window.dispatchEvent(new CustomEvent("startDBUsage"));
+        window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#startDBUsage`));
         axios.put(endPoint, datas)
             .then(response => {
-                window.dispatchEvent(new CustomEvent("endDBUsage"));
+                window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#endDBUsage`));
                 if (okFnc != null) {
                     okFnc(response);
                 }
             })
             .catch(error => {
-                console.log(error);
+                window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#error`, {detail: error}));
             })
     }
 }

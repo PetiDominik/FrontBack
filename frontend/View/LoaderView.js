@@ -2,21 +2,35 @@
 class LoaderView {
     #loaderElement;
     #loaderCode;
+    #parent;
 
     constructor(parent) {
         this.#loaderCode = `<div class="loaderContainer"><div class="loader"></div></div>`;
-        parent.html(this.#loaderCode);
-        this.#loaderElement = parent.find(".loaderContainer");
+        this.#parent = parent;
+        this.append();
     }
 
     remove() {
-        this.#loaderElement.remove();
+        if (this.#loaderElement != null) {
+            this.#loaderElement.remove();
+            this.#loaderElement = null;
+        }
     }
 
-    append(parent) {
-        this.remove();
-        parent.html(this.#loaderCode);
-        this.#loaderElement = parent.find(".loaderContainer");
+    append(parent = null) {
+        if (parent != null) {
+            this.#parent = parent;
+        }
+        if (this.#loaderElement != null) {
+            this.remove();
+        }
+
+        this.#parent.html(this.#loaderCode);
+        this.#loaderElement = this.#parent.find(".loaderContainer");
+    }
+
+    isActive() {
+        return this.#loaderElement != null;
     }
 }
 

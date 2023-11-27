@@ -1,9 +1,11 @@
 
 class RowView {
+    #eventDispatchHeader;
     #datas;
     #parentElement;
 
-    constructor(parentElement, datas) {
+    constructor(parentElement, datas, eventDispatchHeader) {
+        this.#eventDispatchHeader = eventDispatchHeader;
         this.#datas = datas;
         this.#parentElement = parentElement;
 
@@ -28,11 +30,11 @@ class RowView {
         let tdCell = this.#parentElement.children("tr:last-child").children("td:last-child");
         
         tdCell.children(".delete-btn").on("click", (event) => {
-            window.dispatchEvent(new CustomEvent("deleteButtonClick", {detail : this.#datas.writer_id}));
+            window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#deleteButtonClick`, {detail : this.#datas.writer_id}));
         });
         
         tdCell.children(".edit-btn").on("click", (event) => {
-            window.dispatchEvent(new CustomEvent("editButtonClick", {detail : {...this.#datas}}));
+            window.dispatchEvent(new CustomEvent(`${this.#eventDispatchHeader}#editButtonClick`, {detail : {...this.#datas}}));
         });
     }
 }

@@ -155,3 +155,121 @@ table th::first-letter {
 .menuItem.active:hover {
     background-color: #06611d;
 }
+
+/* ------------------------------------------------- */
+#cardListContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.card {
+    width: 200px;
+    aspect-ratio: 1 / 1.2;
+    display: flex;
+    flex-wrap: wrap;
+}
+.card .card-header {
+    width: 100%;
+    flex: 0 0 20%;
+}
+.card .card-content {
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card .card-content .selectBtn {
+    align-self: flex-end;
+    color: white;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    transition: 0.3s all ease-in-out;
+}
+
+.card.publicCard .card-content .selectBtn {
+    background-color: #098b2a;
+}
+.card.publicCard .card-content .selectBtn:hover {
+    background-color: #06611d;
+}
+
+.card.selectedCard .card-content .selectBtn{
+    background-color: #be1212;
+}
+.card.selectedCard .card-content .selectBtn:hover {
+    background-color: #a01010;
+}
+
+/* ---------------------------------------- */
+#alertBox {
+    position: absolute;
+    display: none;
+    top: 0px;
+    left: 50%;
+    min-width: 100px;
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 2px solid #888;
+    overflow: hidden;
+}
+#alertBox .content {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+#alertBox .loaderbar {
+    content: "";
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #06611d;
+}
+
+.notifyIn {
+    animation: notifyIn 0.5s;
+}
+
+.notifyOut {
+    animation: notifyOut 0.5s;
+    top: -50px;
+}
+
+@keyframes notifyIn {
+    0% {
+        top: -50px;
+    }
+    
+    55% {
+        top: 10px;
+    }
+
+    70% {
+        top: -5px;
+    }
+
+    85% {
+        top: 5px
+    }
+
+    100% {
+        top: 0;
+    }
+}
+
+@keyframes notifyOut {
+    0% {
+        top: 0;
+    }
+
+    100% {
+        top: -50px;
+    }
+}
